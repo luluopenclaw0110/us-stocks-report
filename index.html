@@ -14,20 +14,21 @@ h1 { text-align: center; color: #fff; font-size: 2.5rem; margin-bottom: 0.5rem; 
 .filter-btn { padding: 0.75rem 1.25rem; border: none; border-radius: 25px; cursor: pointer; font-size: 0.9rem; font-weight: bold; color: #fff; opacity: 0.6; }
 .filter-btn:hover { opacity: 0.9; transform: scale(1.05); }
 .filter-btn.active { opacity: 1; transform: scale(1.1); }
-table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; margin-bottom: 2rem; }
-th { background: linear-gradient(90deg, #1e3a5f, #2d5a87); color: #fff; padding: 14px 10px; text-align: left; font-weight: 600; font-size: 0.85rem; }
-td { padding: 12px 10px; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.9rem; }
-tr:hover { background: rgba(255,255,255,0.05); }
+.card { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid rgba(255,255,255,0.1); }
+.card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.stock-title { font-size: 1.3rem; font-weight: bold; }
+.stock-code { background: #2d3748; padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.9rem; }
+.rating-badge { padding: 0.4rem 1rem; border-radius: 20px; font-weight: bold; color: #fff; }
+.price-section { display: flex; gap: 2rem; margin-bottom: 1rem; }
+.price { font-size: 2rem; font-weight: bold; color: #fff; }
+.change { font-size: 1.2rem; }
 .positive { color: #4ade80; }
 .negative { color: #f87171; }
-.rating { font-weight: bold; }
-.rating-green { color: #3FB950; }
-.rating-blue { color: #58A6FF; }
-.rating-yellow { color: #D29922; }
-.rating-orange { color: #F0883E; }
-.rating-red { color: #F85149; }
-.stock-link { color: inherit; text-decoration: none; cursor: pointer; }
-.stock-link:hover { color: #58a6ff; }
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.metric { background: rgba(255,255,255,0.05); padding: 0.8rem; border-radius: 8px; }
+.metric-label { font-size: 0.8rem; color: #888; margin-bottom: 0.3rem; }
+.metric-value { font-size: 1.1rem; font-weight: bold; }
+.reason { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 8px; font-size: 0.9rem; line-height: 1.6; color: #c0c0c0; }
 .footer { text-align: center; color: #666; padding: 2rem 0; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 2rem; }
 </style>
 </head>
@@ -39,199 +40,344 @@ tr:hover { background: rgba(255,255,255,0.05); }
 <div class="filter-section">
 <button class="filter-btn active" data-filter="all" style="background: #58a6ff;">全部</button>
 <button class="filter-btn" data-filter="🟢建議持有" style="background: #3FB950;">🟢建議持有</button>
-<button class="filter-btn" data-filter="🔵成長潛力" style="background: #58A6FF;">🔵成長潛力</button>
 <button class="filter-btn" data-filter="🟡觀望" style="background: #D29922;">🟡觀望</button>
 <button class="filter-btn" data-filter="🟠留意" style="background: #F0883E;">🟠留意</button>
 <button class="filter-btn" data-filter="🔴風險" style="background: #F85149;">🔴風險</button>
 </div>
 
-<table id="stock-table">
-<thead>
-<tr><th>代碼</th><th>名稱</th><th>現價</th><th>漲跌</th><th>本益比</th><th>EPS</th><th>ROE%</th><th>股息率%</th><th>52週高低</th><th>評等</th></tr>
-</thead>
-<tbody>
-<tr class="stock-row" data-rating="🔵成長潛力">
-<td><strong>NVDA</strong></td>
-<td>Nvidia</td>
-<td>$219.51</td>
-<td class="negative">-3.96%</td>
-<td>33.67</td>
-<td>$6.52</td>
-<td class="positive">101.5%</td>
-<td>2.00%</td>
-<td>$129 - $237</td>
-<td class="rating rating-blue">🔵成長潛力</td>
-</tr>
-<tr class="stock-row" data-rating="🔵成長潛力">
-<td><strong>MSFT</strong></td>
-<td>Microsoft</td>
-<td>$419.09</td>
-<td class="negative">-1.06%</td>
-<td>24.93</td>
-<td>$16.81</td>
-<td class="positive">34.0%</td>
-<td>87.00%</td>
-<td>$356 - $555</td>
-<td class="rating rating-blue">🔵成長潛力</td>
-</tr>
-<tr class="stock-row" data-rating="🔵成長潛力">
-<td><strong>META</strong></td>
-<td>Meta</td>
-<td>$607.38</td>
-<td class="positive">+2.32%</td>
-<td>22.08</td>
-<td>$27.51</td>
-<td class="positive">32.9%</td>
-<td>35.00%</td>
-<td>$520 - $796</td>
-<td class="rating rating-blue">🔵成長潛力</td>
-</tr>
-<tr class="stock-row" data-rating="🔵成長潛力">
-<td><strong>GOOGL</strong></td>
-<td>Alphabet</td>
-<td>$387.66</td>
-<td class="negative">-1.25%</td>
-<td>29.59</td>
-<td>$13.10</td>
-<td class="positive">38.9%</td>
-<td>23.00%</td>
-<td>$162 - $409</td>
-<td class="rating rating-blue">🔵成長潛力</td>
-</tr>
-<tr class="stock-row" data-rating="🟢建議持有">
-<td><strong>AMZN</strong></td>
-<td>Amazon</td>
-<td>$268.46</td>
-<td class="positive">+3.45%</td>
-<td>31.66</td>
-<td>$8.48</td>
-<td class="positive">24.3%</td>
-<td>0.00%</td>
-<td>$196 - $279</td>
-<td class="rating rating-green">🟢建議持有</td>
-</tr>
-<tr class="stock-row" data-rating="🔵成長潛力">
-<td><strong>JPM</strong></td>
-<td>JPMorgan</td>
-<td>$303.00</td>
-<td class="positive">+1.02%</td>
-<td>14.51</td>
-<td>$20.88</td>
-<td class="positive">16.5%</td>
-<td>198.00%</td>
-<td>$256 - $337</td>
-<td class="rating rating-blue">🔵成長潛力</td>
-</tr>
-<tr class="stock-row" data-rating="🔵成長潛力">
-<td><strong>AAPL</strong></td>
-<td>Apple</td>
-<td>$304.99</td>
-<td class="positive">+2.74%</td>
-<td>36.88</td>
-<td>$8.27</td>
-<td class="positive">141.5%</td>
-<td>35.00%</td>
-<td>$193 - $306</td>
-<td class="rating rating-blue">🔵成長潛力</td>
-</tr>
-<tr class="stock-row" data-rating="🔵成長潛力">
-<td><strong>KO</strong></td>
-<td>Coca-Cola</td>
-<td>$81.17</td>
-<td class="negative">-0.38%</td>
-<td>25.53</td>
-<td>$3.18</td>
-<td class="positive">43.4%</td>
-<td>261.00%</td>
-<td>$65 - $83</td>
-<td class="rating rating-blue">🔵成長潛力</td>
-</tr>
-<tr class="stock-row" data-rating="🔵成長潛力">
-<td><strong>PG</strong></td>
-<td>Procter Gamble</td>
-<td>$143.40</td>
-<td class="positive">+0.96%</td>
-<td>20.96</td>
-<td>$6.84</td>
-<td class="positive">31.1%</td>
-<td>297.00%</td>
-<td>$138 - $171</td>
-<td class="rating rating-blue">🔵成長潛力</td>
-</tr>
-<tr class="stock-row" data-rating="🟡觀望">
-<td><strong>BAC</strong></td>
-<td>Bank of America</td>
-<td>$51.49</td>
-<td class="positive">+0.26%</td>
-<td>12.78</td>
-<td>$4.03</td>
-<td class="positive">10.6%</td>
-<td>218.00%</td>
-<td>$42 - $58</td>
-<td class="rating rating-yellow">🟡觀望</td>
-</tr>
-<tr class="stock-row" data-rating="🔵成長潛力">
-<td><strong>TSM</strong></td>
-<td>Taiwan Semiconductor</td>
-<td>$407.15</td>
-<td class="positive">+5.53%</td>
-<td>35.10</td>
-<td>$11.60</td>
-<td class="positive">36.2%</td>
-<td>93.00%</td>
-<td>$190 - $422</td>
-<td class="rating rating-blue">🔵成長潛力</td>
-</tr>
-<tr class="stock-row" data-rating="🔵成長潛力">
-<td><strong>AVGO</strong></td>
-<td>Broadcom</td>
-<td>$414.57</td>
-<td class="negative">-3.19%</td>
-<td>80.66</td>
-<td>$5.14</td>
-<td class="positive">33.4%</td>
-<td>63.00%</td>
-<td>$226 - $442</td>
-<td class="rating rating-blue">🔵成長潛力</td>
-</tr>
-<tr class="stock-row" data-rating="🔵成長潛力">
-<td><strong>ASML</strong></td>
-<td>ASML</td>
-<td>$1,592.00</td>
-<td class="positive">+41.87%</td>
-<td>51.55</td>
-<td>$30.88</td>
-<td class="positive">52.2%</td>
-<td>55.00%</td>
-<td>$683 - $1,603</td>
-<td class="rating rating-blue">🔵成長潛力</td>
-</tr>
-<tr class="stock-row" data-rating="🔴風險">
-<td><strong>AMD</strong></td>
-<td>AMD</td>
-<td>$449.59</td>
-<td class="positive">+2.01%</td>
-<td>149.37</td>
-<td>$3.01</td>
-<td class="positive">8.1%</td>
-<td>0.00%</td>
-<td>$108 - $469</td>
-<td class="rating rating-red">🔴風險</td>
-</tr>
-<tr class="stock-row" data-rating="🔵成長潛力">
-<td><strong>COST</strong></td>
-<td>Costco</td>
-<td>$1,050.45</td>
-<td class="negative">-23.56%</td>
-<td>54.65</td>
-<td>$19.22</td>
-<td class="positive">29.6%</td>
-<td>56.00%</td>
-<td>$844 - $1,096</td>
-<td class="rating rating-blue">🔵成長潛力</td>
-</tr>
-</tbody>
-</table>
+<div id="cards">
+
+<div class="card" data-rating="🟢建議持有">
+<div class="card-header">
+<div>
+<span class="stock-code">NVDA</span>
+<span class="stock-title" style="margin-left:0.8rem;">Nvidia</span>
+</div>
+<span class="rating-badge" style="background:#3FB950;">🟢建議持有</span>
+</div>
+<div class="price-section">
+<span class="price">$219.51</span>
+<span class="change negative">-3.96%</span>
+</div>
+<div class="metrics">
+<div class="metric"><div class="metric-label">本益比</div><div class="metric-value">33.67</div></div>
+<div class="metric"><div class="metric-label">EPS</div><div class="metric-value">$6.52</div></div>
+<div class="metric"><div class="metric-label">ROE%</div><div class="metric-value positive">101.5%</div></div>
+<div class="metric"><div class="metric-label">股息率%</div><div class="metric-value">2.00%</div></div>
+<div class="metric"><div class="metric-label">52週區間</div><div class="metric-value">$129 - $237</div></div>
+</div>
+<div class="reason">✅ 產業地位: AI 晶片與資料中心 GPU 市場絕對領導者，市占率領先對手數個世代 | 成長動能: 生成式 AI 需求爆發式增長，Blackwell 架構晶片供不應求，資料中心營收高速成長 | 財務健康: ROE 高達 101%，自由現金流量強勁，本益比 33.6x 對成長股合理 | 風險提示: 股價接近 52 週高點，估值已部分反映樂觀預期；中國市場需求具不確定性</div>
+</div>
+
+<div class="card" data-rating="🟢建議持有">
+<div class="card-header">
+<div>
+<span class="stock-code">MSFT</span>
+<span class="stock-title" style="margin-left:0.8rem;">Microsoft</span>
+</div>
+<span class="rating-badge" style="background:#3FB950;">🟢建議持有</span>
+</div>
+<div class="price-section">
+<span class="price">$419.09</span>
+<span class="change negative">-1.06%</span>
+</div>
+<div class="metrics">
+<div class="metric"><div class="metric-label">本益比</div><div class="metric-value">24.93</div></div>
+<div class="metric"><div class="metric-label">EPS</div><div class="metric-value">$16.81</div></div>
+<div class="metric"><div class="metric-label">ROE%</div><div class="metric-value positive">34.0%</div></div>
+<div class="metric"><div class="metric-label">股息率%</div><div class="metric-value">87.00%</div></div>
+<div class="metric"><div class="metric-label">52週區間</div><div class="metric-value">$356 - $555</div></div>
+</div>
+<div class="reason">✅ 產業地位: 全球第二大雲端服務商（Azure），企業軟體與 SaaS 生態系龍頭 | 成長動能: AI 深度整合至全產品線（Copilot），Azure 市佔持續擴大，AI 服務商業化加速 | 財務健康: ROE 34%、本益比 24.9x 估值合理，現金流穩健，配息 87% 具吸引力 | 風險提示: 宏觀經濟放緩可能影響企業 IT 支出；AI 資本支出龐大壓縮短期毛利率</div>
+</div>
+
+<div class="card" data-rating="🟢建議持有">
+<div class="card-header">
+<div>
+<span class="stock-code">META</span>
+<span class="stock-title" style="margin-left:0.8rem;">Meta</span>
+</div>
+<span class="rating-badge" style="background:#3FB950;">🟢建議持有</span>
+</div>
+<div class="price-section">
+<span class="price">$607.38</span>
+<span class="change positive">+2.32%</span>
+</div>
+<div class="metrics">
+<div class="metric"><div class="metric-label">本益比</div><div class="metric-value">22.08</div></div>
+<div class="metric"><div class="metric-label">EPS</div><div class="metric-value">$27.51</div></div>
+<div class="metric"><div class="metric-label">ROE%</div><div class="metric-value positive">32.9%</div></div>
+<div class="metric"><div class="metric-label">股息率%</div><div class="metric-value">35.00%</div></div>
+<div class="metric"><div class="metric-label">52週區間</div><div class="metric-value">$520 - $796</div></div>
+</div>
+<div class="reason">✅ 產業地位: 全球最大社群媒體平台，Facebook/Instagram/Reels 覆蓋全年齡層用戶 | 成長動能: AI 廣告投放效率大幅提升，Reels 短影音貨幣化加速，AR/VR 生態系逐步成熟 | 財務健康: 本益比僅 22x，EPS 27.51，ROE 33%，是科技巨頭中估值最低之一 | 風險提示: 用戶隱私政策變動（iOS ATT）持續影響廣告定向；短影音競爭加劇（TikTok/YouTube）</div>
+</div>
+
+<div class="card" data-rating="🟢建議持有">
+<div class="card-header">
+<div>
+<span class="stock-code">GOOGL</span>
+<span class="stock-title" style="margin-left:0.8rem;">Alphabet</span>
+</div>
+<span class="rating-badge" style="background:#3FB950;">🟢建議持有</span>
+</div>
+<div class="price-section">
+<span class="price">$387.66</span>
+<span class="change negative">-1.25%</span>
+</div>
+<div class="metrics">
+<div class="metric"><div class="metric-label">本益比</div><div class="metric-value">29.59</div></div>
+<div class="metric"><div class="metric-label">EPS</div><div class="metric-value">$13.10</div></div>
+<div class="metric"><div class="metric-label">ROE%</div><div class="metric-value positive">38.9%</div></div>
+<div class="metric"><div class="metric-label">股息率%</div><div class="metric-value">23.00%</div></div>
+<div class="metric"><div class="metric-label">52週區間</div><div class="metric-value">$162 - $409</div></div>
+</div>
+<div class="reason">✅ 產業地位: 全球搜尋引擎龍頭（市佔率 90%+），Android/Chrome/YouTube 生態系無可替代 | 成長動能: AI 搜尋整合（Gemini）將重塑營收結構，YouTube 廣告與訂閱高速成長，雲端業務持續擴張 | 財務健康: ROE 高達 38.88%，本益比 29.6x 具吸引力，現金儲備充裕 | 風險提示: AI 搜尋可能衝擊傳統搜尋廣告營收模式；監管反壟斷訴訟持續</div>
+</div>
+
+<div class="card" data-rating="🟢建議持有">
+<div class="card-header">
+<div>
+<span class="stock-code">AMZN</span>
+<span class="stock-title" style="margin-left:0.8rem;">Amazon</span>
+</div>
+<span class="rating-badge" style="background:#3FB950;">🟢建議持有</span>
+</div>
+<div class="price-section">
+<span class="price">$268.46</span>
+<span class="change positive">+3.45%</span>
+</div>
+<div class="metrics">
+<div class="metric"><div class="metric-label">本益比</div><div class="metric-value">31.66</div></div>
+<div class="metric"><div class="metric-label">EPS</div><div class="metric-value">$8.48</div></div>
+<div class="metric"><div class="metric-label">ROE%</div><div class="metric-value positive">24.3%</div></div>
+<div class="metric"><div class="metric-label">股息率%</div><div class="metric-value">0.00%</div></div>
+<div class="metric"><div class="metric-label">52週區間</div><div class="metric-value">$196 - $279</div></div>
+</div>
+<div class="reason">✅ 產業地位: 全球最大電商平台，北美電商龍頭；AWS 為雲端市場領導者（市佔約 32%）| 成長動能: AI 助理整合電商生態，AWS 受益企業 AI 轉型，廣告業務高速成長 | 財務健康: ROE 24.29%，本益比 31.7x 對成長股合理，物流效率提升帶動利潤率擴張 | 風險提示: 電商競爭激烈（Shopify/Walmart）；零售業務利潤率低；Fed 升息影響科技股估值</div>
+</div>
+
+<div class="card" data-rating="🟢建議持有">
+<div class="card-header">
+<div>
+<span class="stock-code">JPM</span>
+<span class="stock-title" style="margin-left:0.8rem;">JPMorgan</span>
+</div>
+<span class="rating-badge" style="background:#3FB950;">🟢建議持有</span>
+</div>
+<div class="price-section">
+<span class="price">$303.00</span>
+<span class="change positive">+1.02%</span>
+</div>
+<div class="metrics">
+<div class="metric"><div class="metric-label">本益比</div><div class="metric-value">14.51</div></div>
+<div class="metric"><div class="metric-label">EPS</div><div class="metric-value">$20.88</div></div>
+<div class="metric"><div class="metric-label">ROE%</div><div class="metric-value positive">16.5%</div></div>
+<div class="metric"><div class="metric-label">股息率%</div><div class="metric-value">198.00%</div></div>
+<div class="metric"><div class="metric-label">52週區間</div><div class="metric-value">$256 - $337</div></div>
+</div>
+<div class="reason">✅ 產業地位: 全美最大銀行，系統重要性銀行（GSIB），全球金融市場核心參與者 | 成長動能: 利率環境支撐淨利息收入，投資銀行業務復甦，資產管理規模持續擴大 | 財務健康: PE 僅 14.5x，EPS 20.88，股息殖利率近 2%，估值極具吸引力 | 風險提示: 信用風險上升（商業地產、中小企業贷款）；景氣衰退可能導致壞帳增加</div>
+</div>
+
+<div class="card" data-rating="🟡觀望">
+<div class="card-header">
+<div>
+<span class="stock-code">AAPL</span>
+<span class="stock-title" style="margin-left:0.8rem;">Apple</span>
+</div>
+<span class="rating-badge" style="background:#D29922;">🟡觀望</span>
+</div>
+<div class="price-section">
+<span class="price">$304.99</span>
+<span class="change positive">+2.74%</span>
+</div>
+<div class="metrics">
+<div class="metric"><div class="metric-label">本益比</div><div class="metric-value">36.88</div></div>
+<div class="metric"><div class="metric-label">EPS</div><div class="metric-value">$8.27</div></div>
+<div class="metric"><div class="metric-label">ROE%</div><div class="metric-value positive">141.5%</div></div>
+<div class="metric"><div class="metric-label">股息率%</div><div class="metric-value">35.00%</div></div>
+<div class="metric"><div class="metric-label">52週區間</div><div class="metric-value">$193 - $306</div></div>
+</div>
+<div class="reason">✅ 產業地位: 全球消費電子與高階智慧手機市場領導品牌，生態系忠誠度極高 | 成長動能: iPhone AI 功能（Apple Intelligence）有望刺激換機潮；Vision Pro 打開新市場 | 財務健康: ROE 高達 141%，現金牛體質無可挑剔，配息穩定 | 風險提示: 本益比 36.9x 位居歷史高檔區；中國市場銷售下滑；缺乏明顯的新成長催化劑；股價已接近歷史高點</div>
+</div>
+
+<div class="card" data-rating="🟡觀望">
+<div class="card-header">
+<div>
+<span class="stock-code">KO</span>
+<span class="stock-title" style="margin-left:0.8rem;">Coca-Cola</span>
+</div>
+<span class="rating-badge" style="background:#D29922;">🟡觀望</span>
+</div>
+<div class="price-section">
+<span class="price">$81.17</span>
+<span class="change negative">-0.38%</span>
+</div>
+<div class="metrics">
+<div class="metric"><div class="metric-label">本益比</div><div class="metric-value">25.53</div></div>
+<div class="metric"><div class="metric-label">EPS</div><div class="metric-value">$3.18</div></div>
+<div class="metric"><div class="metric-label">ROE%</div><div class="metric-value positive">43.4%</div></div>
+<div class="metric"><div class="metric-label">股息率%</div><div class="metric-value">261.00%</div></div>
+<div class="metric"><div class="metric-label">52週區間</div><div class="metric-value">$65 - $83</div></div>
+</div>
+<div class="reason">✅ 產業地位: 全球最大飲料品牌，品牌價值第一，無可撼動的通路優勢與規模經濟 | 成長動能: 新品（咖啡/機能飲）拓展、供應鏈優化帶動毛利率提升 | 財務健康: ROE 43%、PE 25.5x，股息殖利率約 3.2%，防禦型體質佳 | 風險提示: 成熟飲料市場成長有限；健康意識趨勢衝擊傳統碳酸飲料；新興市場匯率波動</div>
+</div>
+
+<div class="card" data-rating="🟡觀望">
+<div class="card-header">
+<div>
+<span class="stock-code">PG</span>
+<span class="stock-title" style="margin-left:0.8rem;">Procter Gamble</span>
+</div>
+<span class="rating-badge" style="background:#D29922;">🟡觀望</span>
+</div>
+<div class="price-section">
+<span class="price">$143.40</span>
+<span class="change positive">+0.96%</span>
+</div>
+<div class="metrics">
+<div class="metric"><div class="metric-label">本益比</div><div class="metric-value">20.96</div></div>
+<div class="metric"><div class="metric-label">EPS</div><div class="metric-value">$6.84</div></div>
+<div class="metric"><div class="metric-label">ROE%</div><div class="metric-value positive">31.1%</div></div>
+<div class="metric"><div class="metric-label">股息率%</div><div class="metric-value">297.00%</div></div>
+<div class="metric"><div class="metric-label">52週區間</div><div class="metric-value">$138 - $171</div></div>
+</div>
+<div class="reason">✅ 產業地位: 全球消費品巨頭，洗護/紙品/母嬰品牌矩陣堅強，定價能力強 | 成長動能: 高端化策略見效，創新產品帶動份額提升，新興市場滲透持續 | 財務健康: PE 21x 合理，ROE 31%，股息殖利率約 2.5%，財務穩健 | 風險提示: 原物料成本壓力；電商激烈競爭；成熟市場人口結構挑戰；接近 52 週高點</div>
+</div>
+
+<div class="card" data-rating="🟡觀望">
+<div class="card-header">
+<div>
+<span class="stock-code">BAC</span>
+<span class="stock-title" style="margin-left:0.8rem;">Bank of America</span>
+</div>
+<span class="rating-badge" style="background:#D29922;">🟡觀望</span>
+</div>
+<div class="price-section">
+<span class="price">$51.49</span>
+<span class="change positive">+0.26%</span>
+</div>
+<div class="metrics">
+<div class="metric"><div class="metric-label">本益比</div><div class="metric-value">12.78</div></div>
+<div class="metric"><div class="metric-label">EPS</div><div class="metric-value">$4.03</div></div>
+<div class="metric"><div class="metric-label">ROE%</div><div class="metric-value positive">10.6%</div></div>
+<div class="metric"><div class="metric-label">股息率%</div><div class="metric-value">218.00%</div></div>
+<div class="metric"><div class="metric-label">52週區間</div><div class="metric-value">$42 - $58</div></div>
+</div>
+<div class="reason">✅ 產業地位: 全美第二大銀行，全國分支網路覆蓋廣，零售銀行龍頭之一 | 成長動能: 利率維持高檔有助 NIM；數位轉型提升營運效率；投資銀行業務回升 | 財務健康: PE 12.8x 超值，股息殖利率約 2.9%，估值修復空間大 | 風險提示: ROE 僅 10.6%，體質低於同業；商業地產敞口值得關注；呆帳可能上升</div>
+</div>
+
+<div class="card" data-rating="🟢建議持有">
+<div class="card-header">
+<div>
+<span class="stock-code">TSM</span>
+<span class="stock-title" style="margin-left:0.8rem;">Taiwan Semiconductor</span>
+</div>
+<span class="rating-badge" style="background:#3FB950;">🟢建議持有</span>
+</div>
+<div class="price-section">
+<span class="price">$407.15</span>
+<span class="change positive">+5.53%</span>
+</div>
+<div class="metrics">
+<div class="metric"><div class="metric-label">本益比</div><div class="metric-value">35.10</div></div>
+<div class="metric"><div class="metric-label">EPS</div><div class="metric-value">$11.60</div></div>
+<div class="metric"><div class="metric-label">ROE%</div><div class="metric-value positive">36.2%</div></div>
+<div class="metric"><div class="metric-label">股息率%</div><div class="metric-value">93.00%</div></div>
+<div class="metric"><div class="metric-label">52週區間</div><div class="metric-value">$190 - $422</div></div>
+</div>
+<div class="reason">✅ 產業地位: 全球邏輯半導體先進製程唯一供應商（3nm/5nm），晶圓代工市佔率 60%+ | 成長動能: AI GPU/ASIC 需求爆發，CoWoS 封裝產能供不應求，CoP 異質整合技術領先 | 財務健康: ROE 36%、PE 35x，現金流強勁，股息殖利率約 1.1% | 風險提示: 地緣政治風險（台海局勢）；資本支出龐大；景氣循環影響稼動率；技術領先差距若縮小將受衝擊</div>
+</div>
+
+<div class="card" data-rating="🟡觀望">
+<div class="card-header">
+<div>
+<span class="stock-code">AVGO</span>
+<span class="stock-title" style="margin-left:0.8rem;">Broadcom</span>
+</div>
+<span class="rating-badge" style="background:#D29922;">🟡觀望</span>
+</div>
+<div class="price-section">
+<span class="price">$414.57</span>
+<span class="change negative">-3.19%</span>
+</div>
+<div class="metrics">
+<div class="metric"><div class="metric-label">本益比</div><div class="metric-value">80.66</div></div>
+<div class="metric"><div class="metric-label">EPS</div><div class="metric-value">$5.14</div></div>
+<div class="metric"><div class="metric-label">ROE%</div><div class="metric-value positive">33.4%</div></div>
+<div class="metric"><div class="metric-label">股息率%</div><div class="metric-value">63.00%</div></div>
+<div class="metric"><div class="metric-label">52週區間</div><div class="metric-value">$226 - $442</div></div>
+</div>
+<div class="reason">✅ 產業地位: AI 網路晶片（Jericho/B Trident）關鍵供應商，資料中心網路龍頭；VMware 併購強化軟體業務 | 成長動能: 超大規模資料中心網路需求高速成長；AI 推論基礎建設帶動交換器/網卡需求 | 財務健康: ROE 33% 優秀，但 PE 高達 80x，估值偏高 | 風險提示: PE 80x 過度高估；AI 網路市場競爭加劇（Marvell 等）；收購 VMware 整合風險</div>
+</div>
+
+<div class="card" data-rating="🟢建議持有">
+<div class="card-header">
+<div>
+<span class="stock-code">ASML</span>
+<span class="stock-title" style="margin-left:0.8rem;">ASML</span>
+</div>
+<span class="rating-badge" style="background:#3FB950;">🟢建議持有</span>
+</div>
+<div class="price-section">
+<span class="price">$1,592.00</span>
+<span class="change positive">+41.87%</span>
+</div>
+<div class="metrics">
+<div class="metric"><div class="metric-label">本益比</div><div class="metric-value">51.55</div></div>
+<div class="metric"><div class="metric-label">EPS</div><div class="metric-value">$30.88</div></div>
+<div class="metric"><div class="metric-label">ROE%</div><div class="metric-value positive">52.2%</div></div>
+<div class="metric"><div class="metric-label">股息率%</div><div class="metric-value">55.00%</div></div>
+<div class="metric"><div class="metric-label">52週區間</div><div class="metric-value">$683 - $1,603</div></div>
+</div>
+<div class="reason">✅ 產業地位: 全球唯一 EUV 微影系統供應商，技術護城河無可撼動，5nm 以下先進製程唯一選擇 | 成長動能: AI 晶片、先進封裝需求推動 High-NA EUV 訂單爆發；成熟節點設備需求穩健 | 財務健康: ROE 52% 極高，EPS 30.88，市場独占地位支撐高毛利 | 風險提示: 股價創歷史新高，PE 51x 估值昂貴；地緣政治（荷蘭/台灣出口管制）；中國營收佔比約 30% 受美國晶片禁令影響</div>
+</div>
+
+<div class="card" data-rating="🔴風險">
+<div class="card-header">
+<div>
+<span class="stock-code">AMD</span>
+<span class="stock-title" style="margin-left:0.8rem;">AMD</span>
+</div>
+<span class="rating-badge" style="background:#F85149;">🔴風險</span>
+</div>
+<div class="price-section">
+<span class="price">$449.59</span>
+<span class="change positive">+2.01%</span>
+</div>
+<div class="metrics">
+<div class="metric"><div class="metric-label">本益比</div><div class="metric-value">149.37</div></div>
+<div class="metric"><div class="metric-label">EPS</div><div class="metric-value">$3.01</div></div>
+<div class="metric"><div class="metric-label">ROE%</div><div class="metric-value positive">8.1%</div></div>
+<div class="metric"><div class="metric-label">股息率%</div><div class="metric-value">0.00%</div></div>
+<div class="metric"><div class="metric-label">52週區間</div><div class="metric-value">$108 - $469</div></div>
+</div>
+<div class="reason">❌ 產業地位: AI GPU 市場次要供應商（MI300X 性價比落後 NVDA），資料中心份額有限 | 成長動能: MI300A/MI350 GPU 試圖搶市，但 生態系與軟體支援遠不及 CUDA | 財務健康: PE 高達 149x，ROE 僅 8%，EPS 3.01 遠低於股價，估值嚴重偏高 | 風險提示: 本益比 149x 過度昂貴；ROE 低靡顯示資本效率差；無股息支撐；股價已從低點反彈 4 倍，估值調整壓力大</div>
+</div>
+
+<div class="card" data-rating="🟡觀望">
+<div class="card-header">
+<div>
+<span class="stock-code">COST</span>
+<span class="stock-title" style="margin-left:0.8rem;">Costco</span>
+</div>
+<span class="rating-badge" style="background:#D29922;">🟡觀望</span>
+</div>
+<div class="price-section">
+<span class="price">$1,050.45</span>
+<span class="change negative">-23.56%</span>
+</div>
+<div class="metrics">
+<div class="metric"><div class="metric-label">本益比</div><div class="metric-value">54.65</div></div>
+<div class="metric"><div class="metric-label">EPS</div><div class="metric-value">$19.22</div></div>
+<div class="metric"><div class="metric-label">ROE%</div><div class="metric-value positive">29.6%</div></div>
+<div class="metric"><div class="metric-label">股息率%</div><div class="metric-value">56.00%</div></div>
+<div class="metric"><div class="metric-label">52週區間</div><div class="metric-value">$844 - $1,096</div></div>
+</div>
+<div class="reason">✅ 產業地位: 全球最大會員制倉儲零售商，會員續約率 90%+，自有品牌 Kirkland 強大 | 成長動能: 電子商務整合提升客單價；新會員年費調漲直接貢獻營收；倉儲展店空間廣 | 財務健康: ROE 29.65%、PE 54x 偏高，EPS 穩健成長，配息穩定 | 風險提示: PE 54x 位居歷史高檔；股價接近歷史高點；消費放緩影響非必需品銷售；電子商務轉型挑戰</div>
+</div>
+
+</div>
 
 <div class="footer">
 <p>本報告僅供參考，不構成投資建議。投資有風險，請審慎評估。</p>
@@ -240,7 +386,7 @@ tr:hover { background: rgba(255,255,255,0.05); }
 
 <script>
 const filterBtns = document.querySelectorAll('.filter-btn');
-const rows = document.querySelectorAll('.stock-row');
+const cards = document.querySelectorAll('.card');
 
 filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -248,11 +394,11 @@ filterBtns.forEach(btn => {
         btn.classList.add('active');
         
         const filter = btn.dataset.filter;
-        rows.forEach(row => {
-            if (filter === 'all' || row.dataset.rating === filter) {
-                row.style.display = '';
+        cards.forEach(card => {
+            if (filter === 'all' || card.dataset.rating === filter) {
+                card.style.display = '';
             } else {
-                row.style.display = 'none';
+                card.style.display = 'none';
             }
         });
     });
