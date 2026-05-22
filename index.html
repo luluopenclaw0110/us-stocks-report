@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📈 美股建議持有分析報告</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); min-height: 100vh; color: #e0e0e0; padding: 2rem; }
+.container { max-width: 1400px; margin: 0 auto; }
+h1 { text-align: center; color: #fff; font-size: 2.5rem; margin-bottom: 0.5rem; text-shadow: 0 2px 10px rgba(0,150,255,0.3); }
+.subtitle { text-align: center; color: #88aaff; margin-bottom: 2rem; }
+.filter-section { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-bottom: 2rem; }
+.filter-btn { padding: 0.75rem 1.25rem; border: none; border-radius: 25px; cursor: pointer; font-size: 0.9rem; font-weight: bold; color: #fff; opacity: 0.6; }
+.filter-btn:hover { opacity: 0.9; transform: scale(1.05); }
+.filter-btn.active { opacity: 1; transform: scale(1.1); }
+table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; margin-bottom: 2rem; }
+th { background: linear-gradient(90deg, #1e3a5f, #2d5a87); color: #fff; padding: 14px 10px; text-align: left; font-weight: 600; font-size: 0.85rem; }
+td { padding: 12px 10px; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.9rem; }
+tr:hover { background: rgba(255,255,255,0.05); }
+.positive { color: #4ade80; }
+.negative { color: #f87171; }
+.rating { font-weight: bold; }
+.rating-green { color: #3FB950; }
+.rating-blue { color: #58A6FF; }
+.rating-yellow { color: #D29922; }
+.rating-orange { color: #F0883E; }
+.rating-red { color: #F85149; }
+.stock-link { color: inherit; text-decoration: none; cursor: pointer; }
+.stock-link:hover { color: #58a6ff; }
+.footer { text-align: center; color: #666; padding: 2rem 0; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 2rem; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>📈 美股建議持有分析報告</h1>
+<p class="subtitle">更新日期: 2026-05-22 | 資料來源: Yahoo Finance (yfinance)</p>
+
+<div class="filter-section">
+<button class="filter-btn active" data-filter="all" style="background: #58a6ff;">全部</button>
+<button class="filter-btn" data-filter="🟢建議持有" style="background: #3FB950;">🟢建議持有</button>
+<button class="filter-btn" data-filter="🔵成長潛力" style="background: #58A6FF;">🔵成長潛力</button>
+<button class="filter-btn" data-filter="🟡觀望" style="background: #D29922;">🟡觀望</button>
+<button class="filter-btn" data-filter="🟠留意" style="background: #F0883E;">🟠留意</button>
+<button class="filter-btn" data-filter="🔴風險" style="background: #F85149;">🔴風險</button>
+</div>
+
+<table id="stock-table">
+<thead>
+<tr><th>代碼</th><th>名稱</th><th>現價</th><th>漲跌</th><th>本益比</th><th>EPS</th><th>ROE%</th><th>股息率%</th><th>52週高低</th><th>評等</th></tr>
+</thead>
+<tbody>
+<tr class="stock-row" data-rating="🔵成長潛力">
+<td><strong>NVDA</strong></td>
+<td>Nvidia</td>
+<td>$219.51</td>
+<td class="negative">-3.96%</td>
+<td>33.67</td>
+<td>$6.52</td>
+<td class="positive">101.5%</td>
+<td>2.00%</td>
+<td>$129 - $237</td>
+<td class="rating rating-blue">🔵成長潛力</td>
+</tr>
+<tr class="stock-row" data-rating="🔵成長潛力">
+<td><strong>MSFT</strong></td>
+<td>Microsoft</td>
+<td>$419.09</td>
+<td class="negative">-1.06%</td>
+<td>24.93</td>
+<td>$16.81</td>
+<td class="positive">34.0%</td>
+<td>87.00%</td>
+<td>$356 - $555</td>
+<td class="rating rating-blue">🔵成長潛力</td>
+</tr>
+<tr class="stock-row" data-rating="🔵成長潛力">
+<td><strong>META</strong></td>
+<td>Meta</td>
+<td>$607.38</td>
+<td class="positive">+2.32%</td>
+<td>22.08</td>
+<td>$27.51</td>
+<td class="positive">32.9%</td>
+<td>35.00%</td>
+<td>$520 - $796</td>
+<td class="rating rating-blue">🔵成長潛力</td>
+</tr>
+<tr class="stock-row" data-rating="🔵成長潛力">
+<td><strong>GOOGL</strong></td>
+<td>Alphabet</td>
+<td>$387.66</td>
+<td class="negative">-1.25%</td>
+<td>29.59</td>
+<td>$13.10</td>
+<td class="positive">38.9%</td>
+<td>23.00%</td>
+<td>$162 - $409</td>
+<td class="rating rating-blue">🔵成長潛力</td>
+</tr>
+<tr class="stock-row" data-rating="🟢建議持有">
+<td><strong>AMZN</strong></td>
+<td>Amazon</td>
+<td>$268.46</td>
+<td class="positive">+3.45%</td>
+<td>31.66</td>
+<td>$8.48</td>
+<td class="positive">24.3%</td>
+<td>0.00%</td>
+<td>$196 - $279</td>
+<td class="rating rating-green">🟢建議持有</td>
+</tr>
+<tr class="stock-row" data-rating="🔵成長潛力">
+<td><strong>JPM</strong></td>
+<td>JPMorgan</td>
+<td>$303.00</td>
+<td class="positive">+1.02%</td>
+<td>14.51</td>
+<td>$20.88</td>
+<td class="positive">16.5%</td>
+<td>198.00%</td>
+<td>$256 - $337</td>
+<td class="rating rating-blue">🔵成長潛力</td>
+</tr>
+<tr class="stock-row" data-rating="🔵成長潛力">
+<td><strong>AAPL</strong></td>
+<td>Apple</td>
+<td>$304.99</td>
+<td class="positive">+2.74%</td>
+<td>36.88</td>
+<td>$8.27</td>
+<td class="positive">141.5%</td>
+<td>35.00%</td>
+<td>$193 - $306</td>
+<td class="rating rating-blue">🔵成長潛力</td>
+</tr>
+<tr class="stock-row" data-rating="🔵成長潛力">
+<td><strong>KO</strong></td>
+<td>Coca-Cola</td>
+<td>$81.17</td>
+<td class="negative">-0.38%</td>
+<td>25.53</td>
+<td>$3.18</td>
+<td class="positive">43.4%</td>
+<td>261.00%</td>
+<td>$65 - $83</td>
+<td class="rating rating-blue">🔵成長潛力</td>
+</tr>
+<tr class="stock-row" data-rating="🔵成長潛力">
+<td><strong>PG</strong></td>
+<td>Procter Gamble</td>
+<td>$143.40</td>
+<td class="positive">+0.96%</td>
+<td>20.96</td>
+<td>$6.84</td>
+<td class="positive">31.1%</td>
+<td>297.00%</td>
+<td>$138 - $171</td>
+<td class="rating rating-blue">🔵成長潛力</td>
+</tr>
+<tr class="stock-row" data-rating="🟡觀望">
+<td><strong>BAC</strong></td>
+<td>Bank of America</td>
+<td>$51.49</td>
+<td class="positive">+0.26%</td>
+<td>12.78</td>
+<td>$4.03</td>
+<td class="positive">10.6%</td>
+<td>218.00%</td>
+<td>$42 - $58</td>
+<td class="rating rating-yellow">🟡觀望</td>
+</tr>
+<tr class="stock-row" data-rating="🔵成長潛力">
+<td><strong>TSM</strong></td>
+<td>Taiwan Semiconductor</td>
+<td>$407.15</td>
+<td class="positive">+5.53%</td>
+<td>35.10</td>
+<td>$11.60</td>
+<td class="positive">36.2%</td>
+<td>93.00%</td>
+<td>$190 - $422</td>
+<td class="rating rating-blue">🔵成長潛力</td>
+</tr>
+<tr class="stock-row" data-rating="🔵成長潛力">
+<td><strong>AVGO</strong></td>
+<td>Broadcom</td>
+<td>$414.57</td>
+<td class="negative">-3.19%</td>
+<td>80.66</td>
+<td>$5.14</td>
+<td class="positive">33.4%</td>
+<td>63.00%</td>
+<td>$226 - $442</td>
+<td class="rating rating-blue">🔵成長潛力</td>
+</tr>
+<tr class="stock-row" data-rating="🔵成長潛力">
+<td><strong>ASML</strong></td>
+<td>ASML</td>
+<td>$1,592.00</td>
+<td class="positive">+41.87%</td>
+<td>51.55</td>
+<td>$30.88</td>
+<td class="positive">52.2%</td>
+<td>55.00%</td>
+<td>$683 - $1,603</td>
+<td class="rating rating-blue">🔵成長潛力</td>
+</tr>
+<tr class="stock-row" data-rating="🔴風險">
+<td><strong>AMD</strong></td>
+<td>AMD</td>
+<td>$449.59</td>
+<td class="positive">+2.01%</td>
+<td>149.37</td>
+<td>$3.01</td>
+<td class="positive">8.1%</td>
+<td>0.00%</td>
+<td>$108 - $469</td>
+<td class="rating rating-red">🔴風險</td>
+</tr>
+<tr class="stock-row" data-rating="🔵成長潛力">
+<td><strong>COST</strong></td>
+<td>Costco</td>
+<td>$1,050.45</td>
+<td class="negative">-23.56%</td>
+<td>54.65</td>
+<td>$19.22</td>
+<td class="positive">29.6%</td>
+<td>56.00%</td>
+<td>$844 - $1,096</td>
+<td class="rating rating-blue">🔵成長潛力</td>
+</tr>
+</tbody>
+</table>
+
+<div class="footer">
+<p>本報告僅供參考，不構成投資建議。投資有風險，請審慎評估。</p>
+</div>
+</div>
+
+<script>
+const filterBtns = document.querySelectorAll('.filter-btn');
+const rows = document.querySelectorAll('.stock-row');
+
+filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        const filter = btn.dataset.filter;
+        rows.forEach(row => {
+            if (filter === 'all' || row.dataset.rating === filter) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>
